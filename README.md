@@ -22,6 +22,7 @@ Before you begin, make sure you have the following software installed on your ma
 3. Install the dependencies.<br/>
 `composer install`
 4. Start the development server.<br/>
+5. Visit the app at http://localhost/admin-panel-ecommerce.
 
 #### Using the App
 
