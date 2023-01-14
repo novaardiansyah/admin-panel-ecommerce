@@ -23,15 +23,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
+
+
 $config['base_url']  = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
 $config['base_url'] .= "://" . $_SERVER['HTTP_HOST'];
 $config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
 
 $config['api_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
-$config['api_url'] .= "://" . $_SERVER['HTTP_HOST'] . '/admin-panel-ecommerce/v1';
+$config['api_url'] .= "://" . $_SERVER['HTTP_HOST'];
 
 $config['app_name_short'] = 'Admin Panel';
-$config['app_name_long'] = 'Admin Panel E-Commerce';
+$config['app_name_long']  = 'Admin Panel E-Commerce';
 
 /*
 |--------------------------------------------------------------------------
@@ -145,7 +147,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = FCPATH . 'vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
