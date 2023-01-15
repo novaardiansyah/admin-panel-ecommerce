@@ -20,9 +20,11 @@ function onLogin(event)
       form.find('.invalid-feedback').html('Something went wrong.').hide()
     },
     success: function(response) {
+      log_server_error(url, response)
       if (response.status == true && response.status_code == 200)
       {
-        return redirect('dashboard');
+        let token = response.data.token;
+        return onStoreServerLog({ callback: () => redirect('dashboard'), access_token: token.access_token, refresh_token: token.refresh_token })
       }
 
       if (response.status == false && response.status_code == 'invalid-form') {
