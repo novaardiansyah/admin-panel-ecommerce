@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="<?= adminlte_url('plugins/icheck-bootstrap/icheck-bootstrap.min.css'); ?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= adminlte_url('dist/css/adminlte.min.css'); ?>">
+  <?php $this->load->view('Layout/Style'); ?>
 </head>
 
 <body class="hold-transition <?= $page; ?>-page">

@@ -4,5 +4,6 @@
     <script src="<?= adminlte_url('plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
     <!-- AdminLTE App -->
     <script src="<?= adminlte_url('dist/js/adminlte.min.js') ?>"></script>
+    <?php $this->load->view('Layout/Script'); ?>
   </body>
 </html>

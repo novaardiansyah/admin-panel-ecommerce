@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 use Dotenv\Dotenv;
 
@@ -20,6 +20,17 @@ function format_date($data, $format = 'Y-m-d H:i:s')
   return date_format(date_create($data), $format);
 }
 
+function getAppName($type = 'long')
+{
+  $ci = get_instance();
+
+  if ($type == 'long') {
+    return $ci->config->item('app_name_long');
+  }
+
+  return $ci->config->item('app_name_short');
+}
+
 function versionAssets($version = 1)
 {
   $domain = explode(':', $_SERVER['HTTP_HOST'])[0];
@@ -29,7 +40,7 @@ function versionAssets($version = 1)
   }
 
   if ($version == 2) return '?v=' . getTimes('now', 'YmdH');
-  
+
   return '?v=' . getTimes('now', 'Ymd');
 }
 
@@ -37,11 +48,11 @@ function api_url($path = '')
 {
   $dotenv = Dotenv::createImmutable(dirname(__FILE__, 3));
   $dotenv->load();
-  
+
   $ci  = get_instance();
   $url = $ci->config->item('api_url');
 
-  return $url . $_ENV['API_PATH']. $path;
+  return $url . $_ENV['API_PATH'] . $path;
 }
 
 function adminlte_url($path = '')
@@ -51,15 +62,48 @@ function adminlte_url($path = '')
   return $url . $path;
 }
 
+function env($key, $default = '')
+{
+  $dotenv = Dotenv::createImmutable(dirname(__FILE__, 3));
+  $dotenv->load();
+
+  return $_ENV[$key] ?: $default;
+}
+
+function setSession($data = [])
+{
+  $ci = get_instance();
+  foreach ($data as $key => $value) {
+    $key = env('PREFIX_SESSION') . $key;
+    $ci->session->set_userdata($key, $value);
+  }
+}
+
+function getSession($key)
+{
+  $ci  = get_instance();
+  $key = env('PREFIX_SESSION') . $key;
+  return $ci->session->userdata($key);
+}
+
+function destroySession($data = [])
+{
+  $ci = get_instance();
+  foreach ($data as $key) {
+    $key = env('PREFIX_SESSION') . $key;
+    $ci->session->unset_userdata($key);
+  }
+}
+
 function requestApi($url, $method = 'POST', $data = [], $contentType = 'form-urlencoded')
 {
   $ci = get_instance();
-  
+
   $url = api_url($url);
 
   $send = [];
   $data = array_merge($data, $send);
-  
+
   $curl = curl_init();
 
   $params = [
@@ -99,16 +143,79 @@ function requestApi($url, $method = 'POST', $data = [], $contentType = 'form-url
   curl_setopt_array($curl, $params);
 
   $error = curl_error($curl);
-  
+
   if ($error) {
     curl_close($curl);
     return ['status' => false, 'status_code' => 500, 'message' => $error];
   }
-  
+
   $response = curl_exec($curl);
   $response = json_decode($response, FALSE);
 
   curl_close($curl);
 
   return $response;
+}
+
+function arrayToObject($array)
+{
+  if (!is_array($array)) {
+    return $array;
+  }
+
+  $object = new stdClass();
+  if (is_array($array) && count($array) > 0) {
+    foreach ($array as $name => $value) {
+      $name = trim($name);
+      if (!empty($name)) {
+        $object->$name = arrayToObject($value);
+      }
+    }
+    return $object;
+  } else {
+    return FALSE;
+  }
+}
+
+function cleanInput($input)
+{
+  $search = array(
+    '@<script[^>]*?>.*?</script>@si',   // Strip out javascript
+    '@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
+    '@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
+    '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
+  );
+
+  $output = preg_replace($search, '', $input);
+  return $output;
+}
+
+function getReqBody($key = 'key', $default = null, $data = [])
+{
+  $ci = get_instance();
+
+  $res = $default;
+
+  if (isset($data[$key])) {
+    $res = $data[$key];
+  } else if ($ci->input->post($key)) {
+    $res = $ci->input->post($key);
+  } else if ($ci->input->get($key)) {
+    $res = $ci->input->get($key);
+  }
+
+  $res = cleanInput($res);
+
+  // * if $res == string
+  if (is_string($res)) {
+    $res = trim($res);
+  }
+
+  // * if $res == array
+  if (is_array($res)) {
+    $res = array_map('trim', $res);
+    $res = arrayToObject($res);
+  }
+
+  return $res;
 }
