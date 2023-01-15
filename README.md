@@ -56,7 +56,7 @@ Thank you for your understanding.
 
 ### Status
 
-![stages](https://img.shields.io/badge/stages-production-informational)
+![stages](https://img.shields.io/badge/stages-development-informational)
 [![information](https://img.shields.io/badge/information-references-informational)](https://github.com/novaardiansyah/admin-panel-ecommerce/blob/main/references.json)
 ![size](https://img.shields.io/github/repo-size/novaardiansyah/admin-panel-ecommerce?label=size&color=informational)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/novaardiansyah/admin-panel-ecommerce/blob/main/LICENSE)
