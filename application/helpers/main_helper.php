@@ -69,10 +69,9 @@ function api_url($path = '')
   $dotenv = Dotenv::createImmutable(dirname(__FILE__, 3));
   $dotenv->load();
 
-  $ci  = get_instance();
-  $url = $ci->config->item('api_url');
+  $ci = get_instance();
 
-  return $url . $_ENV['API_PATH'] . $path;
+  return $_ENV['API_PATH'] . $path;
 }
 
 function adminlte_url($path = '')

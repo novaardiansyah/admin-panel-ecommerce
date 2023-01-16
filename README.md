@@ -50,7 +50,11 @@ This project is licensed under the [MIT License](https://github.com/novaardiansy
 If you want to contact me you can reach me at [Email](mailto:novaardiansyah78@gmal.com) or [Whatsapp](https://wa.me/6289506668480).
 
 ### Live Preview
-Unfortunately, live preview is not currently available for this project. However, you can easily set up the project on your own machine and run it locally. Please see the "Installation and Usage" section above for instructions on how to do this.
+<!-- Is Not Available -->
+<!-- Unfortunately, live preview is not currently available for this project. However, you can easily set up the project on your own machine and run it locally. Please see the "Installation and Usage" section above for instructions on how to do this. -->
+
+<!-- Is Available -->
+Hi future, you can see the live preview of this project at [here](http://admin-panel-ecommerce.rf.gd/). However, please note that this is a development version of the project, and as such, it may not be fully functional.
 
 Thank you for your understanding.
 

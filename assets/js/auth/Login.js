@@ -20,7 +20,6 @@ function onLogin(event)
       form.find('.invalid-feedback').html('Something went wrong.').hide()
     },
     success: function(response) {
-      log_server_error(url, response)
       if (response.status == true && response.status_code == 200)
       {
         let token = response.data.token;
