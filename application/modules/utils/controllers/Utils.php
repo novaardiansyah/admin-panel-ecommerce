@@ -6,7 +6,7 @@ class Utils extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-    $this->load->model('utils/M_Utils', 'model');
+    $this->load->model('M_Utils', 'model');
   }
 
   public function store_server_log()
@@ -14,7 +14,7 @@ class Utils extends CI_Controller
     $log           = getReqBody('log', [], $_POST);
     $access_token  = getReqBody('access_token', '', $_POST);
     $refresh_token = getReqBody('refresh_token', '', $_POST);
-
+    
     $log = json_decode($log);
 
     $send = [

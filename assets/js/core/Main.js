@@ -60,12 +60,12 @@ function onStoreServerLog({ callback, access_token = null, refresh_token = null 
 {
   let key = 'server-error';
   let log = localStorage.getItem(key);
-
+  
   if (log == null) return callback();
   if (access_token == null || refresh_token == null) return callback();
 
   let url = base_url('utils/store-server-log');
-
+  
   $.ajax({
     url: url,
     type: 'POST',
