@@ -231,3 +231,16 @@ function getReqBody($key = 'key', $default = null, $data = [])
 
   return $res;
 }
+
+function backend($view, $data)
+{
+  $ci = get_instance();
+  
+  $data['pageTitle'] = isset($data['pageTitle']) ? $data['pageTitle'] : $data['title'];
+
+  $data = array_merge($data, [
+    'content' => $view
+  ]);
+  
+  $ci->load->view('Main', $data);
+}
