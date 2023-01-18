@@ -12,11 +12,16 @@ class Dashboard extends CI_Controller
   public function index()
   {
     $data = [
-      'pageTitle' => 'Dashboard',
+      'title'      => 'Dashboard',
+      'breadcrumb' => [
+        'Home'      => base_url('dashboard'),
+        'Dashboard' => ''
+      ],
       'script' => [
         base_url('assets/js/dashboard/Dashboard.js' . versionAssets())
       ]
     ];
-    $this->load->view('dashboard/Dashboard', $data);
+
+    backend('dashboard/Dashboard', $data);
   }
 }
