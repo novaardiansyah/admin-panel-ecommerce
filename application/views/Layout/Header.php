@@ -16,4 +16,4 @@
   <link rel="stylesheet" href="<?= adminlte_url('dist/css/adminlte.min.css'); ?>" />
 </head>
 
-<body class="hold-transition dark-mode sidebar-mini">
+<body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">

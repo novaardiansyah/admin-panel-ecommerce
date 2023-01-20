@@ -11,13 +11,17 @@ class Menu extends CI_Controller
 
   public function index()
   {
-    $data = [
-      'pageTitle' => 'Menu',
-      'script' => [
-        // base_url('assets/js/menu/Menu.js' . versionAssets())
-      ]
-    ];
-    $this->load->view('menu/Menu', $data);
+    $menu = requestApi('menus', 'POST', []);
+
+    if ($menu->status == false && isset($menu->error) && $menu->error == 'refresh_token') {
+      $menu = requestApi([
+        'url'    => $menu->response->url,
+        'method' => $menu->response->method,
+        'data'   => $menu->response->data
+      ]);
+    }
+
+    echo json_encode($menu); exit;
   }
 
   public function onStore()

@@ -116,11 +116,13 @@ function destroySession($data = [])
 
 function requestApi($url, $method = 'POST', $data = [], $contentType = 'form-urlencoded')
 {
-  $ci = get_instance();
-
   $url = api_url($url);
 
-  $send = [];
+  $send = [
+    'access_token'  => getSession('log_access_token'),
+    'refresh_token' => getSession('log_refresh_token')
+  ];
+
   $data = array_merge($data, $send);
 
   $curl = curl_init();
@@ -169,9 +171,26 @@ function requestApi($url, $method = 'POST', $data = [], $contentType = 'form-url
   }
 
   $response = curl_exec($curl);
-  $response = json_decode($response, FALSE);
+  $response = json_decode($response);
+  $response = arrayToObject($response);
 
   curl_close($curl);
+
+  if ((isset($response->status_code) && $response->status_code == 401) && (isset($response->error) && $response->error == 'expired_token')) {
+    $newToken = $response->token;
+
+    $updateToken = [
+      'log_access_token'  => $newToken->access_token,
+      'log_refresh_token' => $newToken->refresh_token
+    ];
+    setSession($updateToken);
+
+    return arrayToObject(['status' => false, 'error' => 'refresh_token', 'response' => [
+      'url'    => $url,
+      'method' => $method,
+      'data'   => $data,
+    ]]);
+  }
 
   return $response;
 }

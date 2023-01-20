@@ -17,7 +17,6 @@
                   <?= $key; ?>
                 <?php endif; ?>
               </li>
-
             <?php endforeach; ?>
           </ol>
         </div><!-- /.col -->
