@@ -4,8 +4,9 @@
   <?php $this->load->view('Layout/Sidebar'); ?>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper my-0">
     <?php $this->load->view('Layout/Breadcrumb'); ?>
+
     <!-- Main content -->
     <section class="content">
       <?php $this->load->view($content); ?>
