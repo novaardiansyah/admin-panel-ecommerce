@@ -89,4 +89,14 @@ class Auth extends CI_Controller
     ];
     $this->load->view('auth/ForgotPassword', $data);
   }
+
+  public function session_expired()
+  {
+    $data = [
+      'page'      => 'login',
+      'pageTitle' => 'Admin Panel - Session Expired'
+    ];
+    
+    $this->load->view('auth/SessionExpired', $data);
+  }
 }

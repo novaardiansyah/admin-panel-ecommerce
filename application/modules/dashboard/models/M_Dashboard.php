@@ -7,4 +7,9 @@ class M_Dashboard extends CI_Model
   {
     parent::__construct();
   }
+
+  function getMenu()
+  {
+    return requestApi('menus', 'GET');
+  }
 }

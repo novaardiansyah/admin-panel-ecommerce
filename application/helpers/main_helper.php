@@ -125,6 +125,10 @@ function requestApi($url, $method = 'POST', $data = [], $contentType = 'form-url
 
   $data = array_merge($data, $send);
 
+  if ($method == 'GET') {
+    $url = $url . '?' . http_build_query($data);
+  }
+
   $curl = curl_init();
 
   $params = [
@@ -176,22 +180,7 @@ function requestApi($url, $method = 'POST', $data = [], $contentType = 'form-url
 
   curl_close($curl);
 
-  if ((isset($response->status_code) && $response->status_code == 401) && (isset($response->error) && $response->error == 'expired_token')) {
-    $newToken = $response->token;
-
-    $updateToken = [
-      'log_access_token'  => $newToken->access_token,
-      'log_refresh_token' => $newToken->refresh_token
-    ];
-    setSession($updateToken);
-
-    return arrayToObject(['status' => false, 'error' => 'refresh_token', 'response' => [
-      'url'    => $url,
-      'method' => $method,
-      'data'   => $data,
-    ]]);
-  }
-
+  if ((isset($response->status_code) && $response->status_code == 401)) return isLogin(false);
   return $response;
 }
 
@@ -262,4 +251,31 @@ function backend($view, $data)
   ]);
   
   $ci->load->view('Main', $data);
+}
+
+function isLogin($status = true)
+{
+  $ci = get_instance();
+
+  $session_log = [
+    'log_userId'        => getSession('log_userId'),
+    'log_username'      => getSession('log_username'),
+    'log_name'          => getSession('log_name'),
+    'log_email'         => getSession('log_email'),
+    'log_phone'         => getSession('log_phone'),
+    'log_address'       => getSession('log_address'),
+    'log_roleId'        => getSession('log_roleId'),
+    'log_companyId'     => getSession('log_companyId'),
+    'log_access_token'  => getSession('log_access_token'),
+    'log_refresh_token' => getSession('log_refresh_token')
+  ];
+  $session_log = json_decode(json_encode($session_log));
+
+  if ($status == false || $session_log->log_access_token == null || $session_log->log_refresh_token == null) {
+    destroySession($session_log);
+    $ci->session->sess_destroy();
+    return redirect('auth/session-expired');
+  }
+  
+  return;
 }
