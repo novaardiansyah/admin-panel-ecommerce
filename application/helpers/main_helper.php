@@ -243,14 +243,65 @@ function getReqBody($key = 'key', $default = null, $data = [])
 function backend($view, $data)
 {
   $ci = get_instance();
-  
+
   $data['pageTitle'] = isset($data['pageTitle']) ? $data['pageTitle'] : $data['title'];
 
   $data = array_merge($data, [
     'content' => $view
   ]);
-  
+
   $ci->load->view('Main', $data);
+}
+
+function encode($value)
+{
+  if (!$value) return false;
+
+  $ci = get_instance();
+
+  $key       = sha1(env('ENCODED_KEY'));
+  $strLen    = strlen($value);
+  $keyLen    = strlen($key);
+  $j         = 0;
+  $crypttext = '';
+
+  for ($i = 0; $i < $strLen; $i++) {
+    $ordStr = ord(substr($value, $i, 1));
+    if ($j == $keyLen) {
+      $j = 0;
+    }
+    $ordKey = ord(substr($key, $j, 1));
+    $j++;
+    $crypttext .= strrev(base_convert(dechex($ordStr + $ordKey), 16, 36));
+  }
+
+  return base64_encode($crypttext);
+}
+
+function decode($value)
+{
+  if (!$value) return false;
+
+  $ci = get_instance();
+
+  $value       = base64_decode($value);
+  $key         = sha1(env('ENCODED_KEY'));
+  $strLen      = strlen($value);
+  $keyLen      = strlen($key);
+  $j           = 0;
+  $decrypttext = '';
+
+  for ($i = 0; $i < $strLen; $i += 2) {
+    $ordStr = hexdec(base_convert(strrev(substr($value, $i, 2)), 36, 16));
+    if ($j == $keyLen) {
+      $j = 0;
+    }
+    $ordKey = ord(substr($key, $j, 1));
+    $j++;
+    $decrypttext .= chr($ordStr - $ordKey);
+  }
+
+  return $decrypttext;
 }
 
 function isLogin($status = true)
@@ -274,8 +325,29 @@ function isLogin($status = true)
   if ($status == false || $session_log->log_access_token == null || $session_log->log_refresh_token == null) {
     destroySession($session_log);
     $ci->session->sess_destroy();
-    return redirect('auth/session-expired');
+
+    $name     = 'name=' . encode($session_log->log_name);
+    $username = 'username=' . encode($session_log->log_username);
+
+    $url = base_url('auth/session-expired?' . $name . '&' . $username);
+    return header('Location: ' . $url);
   }
-  
-  return;
+}
+
+function textCapitalize($text)
+{
+  $text = ucwords(strtolower($text));
+  return trim($text);
+}
+
+function textLowercase($text)
+{
+  $text = strtolower($text);
+  return trim($text);
+}
+
+function textUppercase($text)
+{
+  $text = strtoupper($text);
+  return trim($text);
 }
