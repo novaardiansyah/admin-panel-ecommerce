@@ -13,14 +13,6 @@
       </div>
     </footer>
 
-    <!-- REQUIRED SCRIPTS -->
-    <!-- jQuery -->
-    <script src="<?= adminlte_url('plugins/jquery/jquery.min.js'); ?>"></script>
-    <!-- Bootstrap -->
-    <script src="<?= adminlte_url('plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-    <!-- overlayScrollbars -->
-    <script src="<?= adminlte_url('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'); ?>"></script>
-    <!-- AdminLTE App -->
-    <script src="<?= adminlte_url('dist/js/adminlte.js'); ?>"></script>
+    <?php $this->load->view('Layout/Script'); ?>
   </body>
 </html>

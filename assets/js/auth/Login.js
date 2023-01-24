@@ -38,6 +38,7 @@ function onLogin(event)
       }
       
       if (response.status == false && response.status_code == 400) {
+        ToastsAlert({ type: 'error', message: response.message });
         return console.log('Login failed', response);
       }
 
