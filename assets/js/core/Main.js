@@ -81,3 +81,39 @@ function onStoreServerLog({ callback, access_token = null, refresh_token = null 
     }
   })
 }
+
+function stripHtml(html)
+{
+  let tmp = document.createElement("DIV");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
+}
+
+// * Path: https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js
+function ToastsAlert({ type = 'success', message = '', title = false, progressBar = true, showDuration = 300, timeOut = 3000, onclick = null })
+{
+  if (!title) {
+    if (type == 'success') title = 'Process was successful.';
+    if (type == 'info') title = 'Information.';
+    if (type == 'warning') title = 'Warning!';
+    if (type == 'error') title = 'Error!';
+  }
+
+  toastr[type](message, title, {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": progressBar,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": onclick,
+    "showDuration": showDuration,
+    "hideDuration": "1000",
+    "timeOut": timeOut,
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  });
+}

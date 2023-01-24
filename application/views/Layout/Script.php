@@ -1,5 +1,16 @@
 <?php $this->load->library('user_agent'); ?>
 
+<!-- jQuery -->
+<script src="<?= adminlte_url('plugins/jquery/jquery.min.js'); ?>"></script>
+<!-- Bootstrap -->
+<script src="<?= adminlte_url('plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+<!-- overlayScrollbars -->
+<script src="<?= adminlte_url('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js'); ?>"></script>
+<!-- AdminLTE App -->
+<script src="<?= adminlte_url('dist/js/adminlte.js'); ?>"></script>
+<!-- Toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<!-- Moment -->
 <script src="<?= adminlte_url('plugins/moment/moment-with-locales.min.js') ?>"></script>
 
 <script>
