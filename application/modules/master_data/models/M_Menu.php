@@ -22,4 +22,9 @@ class M_Menu extends CI_Model
     
     return requestApi('menus', 'POST', $send);
   }
+
+  public function list_menu()
+  {
+    return requestApi('menus', 'GET');
+  }
 }
