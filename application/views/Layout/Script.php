@@ -12,6 +12,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <!-- Moment -->
 <script src="<?= adminlte_url('plugins/moment/moment-with-locales.min.js') ?>"></script>
+<!-- Datatables & Plugins -->
+<script src="<?= adminlte_url('plugins/datatables/jquery.dataTables.min.js') ?>"></script>
+<script src="<?= adminlte_url('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') ?>"></script>
+<script src="<?= adminlte_url('plugins/datatables-responsive/js/dataTables.responsive.min.js') ?>"></script>
+<script src="<?= adminlte_url('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') ?>"></script>
+<script src="<?= adminlte_url('plugins/datatables-buttons/js/dataTables.buttons.min.js') ?>"></script>
+<script src="<?= adminlte_url('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') ?>"></script>
+<script src="<?= adminlte_url('plugins/jszip/jszip.min.js') ?>"></script>
+<script src="<?= adminlte_url('plugins/pdfmake/pdfmake.min.js') ?>"></script>
+<script src="<?= adminlte_url('plugins/pdfmake/vfs_fonts.js') ?>"></script>
+<script src="<?= adminlte_url('plugins/datatables-buttons/js/buttons.html5.min.js') ?>"></script>
+<script src="<?= adminlte_url('plugins/datatables-buttons/js/buttons.print.min.js') ?>"></script>
+<script src="<?= adminlte_url('plugins/datatables-buttons/js/buttons.colVis.min.js') ?>"></script>
 
 <script>
   const config = {

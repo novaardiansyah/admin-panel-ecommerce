@@ -25,10 +25,10 @@ function getAppName($type = 'long')
   $ci = get_instance();
 
   if ($type == 'long') {
-    return $ci->config->item('app_name_long');
+    return env('APP_NAME_LONG', 'My Application');
   }
 
-  return $ci->config->item('app_name_short');
+  return env('APP_NAME_SHORT', 'My App');
 }
 
 function userAgent()
